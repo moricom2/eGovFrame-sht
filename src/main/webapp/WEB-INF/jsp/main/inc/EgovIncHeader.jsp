@@ -29,7 +29,7 @@
     <img src="<c:url value='/images/header/limg_lt_nia_logo.gif' />" alt="NIA한국정보화진흥원" />
 </div>
  -->
-<div id="project_title"><span class="maintitle">표준프레임워크 </span><strong>샘플 홈페이지 </strong>
+<div id="project_title"><span class="maintitle">표준프레임워크 </span><strong>샘플 홈페이지 <mark><%=System.getenv("HOSTNAME")!=null?System.getenv("HOSTNAME"):""%></mark></strong>
 <a href="<c:url value='/EgovPageLink.do?link=main/sample_menu/Intro'/>" target="_blank"><img width="20" height="20" src="<c:url value='/images/question.jpg'/>" alt="메뉴구성 설명" title="메뉴구성 설명"></a>
 </div>
 <!-- //행정안전부 로고 및 타이틀 끝 -->
