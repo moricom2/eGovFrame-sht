@@ -11,7 +11,7 @@ node {
             string(defaultValue: '', description: 'Git branch/tag reference', name: 'SOURCE_REPOSITORY_REF', trim: true),
             string(defaultValue: '', description: 'Path within Git project to build; empty for root project directory.', name: 'CONTEXT_DIR', trim: true)])])
 
-    withEnv(["PATH+OC=${tool 'oc4.6'}"]) {
+    withEnv(["PATH+OC=${tool 'oc4.6'}"]){
         stage('oc login'){
 		    wrap([$class: 'MaskPasswordsBuildWrapper', varPasswordPairs: [
 		    											[var: 'PARAM_OCP_PASSWORD', password: PARAM_OCP_PASSWORD]
@@ -23,8 +23,6 @@ node {
             sh "oc project ${PARAM_OCP_PROJECT}"
         }
         stage('oc process & export'){
-            def PARAM_OCP_TEMPLATE_PROJECT = 'openshift'
-            def PARAM_OCP_TEMPLATE_NAME = 'eap73-basic-s2i'
             sh "oc process ${PARAM_OCP_TEMPLATE_NAME} -l jenkinsJobName=${env.JOB_NAME} APPLICATION_NAME=${APPLICATION_NAME} SOURCE_REPOSITORY_URL=${SOURCE_REPOSITORY_URL} SOURCE_REPOSITORY_REF=${SOURCE_REPOSITORY_REF} CONTEXT_DIR=${CONTEXT_DIR} -o yaml > ${APPLICATION_NAME}.yaml"
             sh "cat ${APPLICATION_NAME}.yaml"
             //sh "oc process ${PARAM_OCP_TEMPLATE_NAME} APPLICATION_NAME=${APPLICATION_NAME} SOURCE_REPOSITORY_URL=${SOURCE_REPOSITORY_URL} SOURCE_REPOSITORY_REF=${SOURCE_REPOSITORY_REF} CONTEXT_DIR=${CONTEXT_DIR}  | oc create -f - --dry-run=client"          
