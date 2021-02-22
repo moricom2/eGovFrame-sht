@@ -13,9 +13,9 @@ node {
 
     withEnv(["PATH+OC=${tool 'oc4.6'}"]){
         stage('oc login'){
-		    wrap([$class: 'MaskPasswordsBuildWrapper', varPasswordPairs: [[var: 'PARAM_OCP_PASSWORD', password: PARAM_OCP_PASSWORD]]]){
-			    sh "oc login --server=${PARAM_OCP_APISERVER} --username=${PARAM_OCP_USERNAME} --password=${PARAM_OCP_PASSWORD}"
-		    }
+			wrap([$class: 'MaskPasswordsBuildWrapper', varPasswordPairs: [[var: 'PARAM_OCP_PASSWORD', password: PARAM_OCP_PASSWORD]]]){
+				sh "oc login --server=${PARAM_OCP_APISERVER} --username=${PARAM_OCP_USERNAME} --password=${PARAM_OCP_PASSWORD}"
+			}
         }
         stage('oc project'){
             sh "oc project ${PARAM_OCP_PROJECT}"
