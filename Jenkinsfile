@@ -18,12 +18,22 @@ node {
 			}
         }
         stage('oc project'){
-            sh "oc project ${PARAM_OCP_PROJECT}"
+			sh "oc project ${PARAM_OCP_PROJECT}"
         }
-        stage('oc process & export'){
-            sh "oc process ${PARAM_OCP_TEMPLATE_NAME} -l jenkinsJobName=${env.JOB_NAME} APPLICATION_NAME=${APPLICATION_NAME} SOURCE_REPOSITORY_URL=${SOURCE_REPOSITORY_URL} SOURCE_REPOSITORY_REF=${SOURCE_REPOSITORY_REF} CONTEXT_DIR=${CONTEXT_DIR} -o yaml > ${APPLICATION_NAME}.yaml"
-            sh "cat ${APPLICATION_NAME}.yaml"
-            //sh "oc process ${PARAM_OCP_TEMPLATE_NAME} APPLICATION_NAME=${APPLICATION_NAME} SOURCE_REPOSITORY_URL=${SOURCE_REPOSITORY_URL} SOURCE_REPOSITORY_REF=${SOURCE_REPOSITORY_REF} CONTEXT_DIR=${CONTEXT_DIR}  | oc create -f - --dry-run=client"          
+        stage('oc create'){
+            sh "oc process ${PARAM_OCP_TEMPLATE_NAME} -l app=${APPLICATION_NAME},application=${APPLICATION_NAME} APPLICATION_NAME=${APPLICATION_NAME} SOURCE_REPOSITORY_URL=${SOURCE_REPOSITORY_URL} SOURCE_REPOSITORY_REF=${SOURCE_REPOSITORY_REF} CONTEXT_DIR=${CONTEXT_DIR} -o yaml | oc create -f -"                
+        }
+        stage('oc logs bc (s2i-build)'){
+            sh "oc logs -f bc/${APPLICATION_NAME}-build-artifacts"
+        }
+        stage('oc logs bc (docker-build)'){
+            sh "sleep 120 && oc logs -f bc/${APPLICATION_NAME}"
+        }
+        stage('oc logs dc'){
+            sh "oc logs -f dc/${APPLICATION_NAME}"
+        }
+        stage('oc logs pod'){
+            sh "oc logs -f --selector=application=${APPLICATION_NAME}"
         }
     }
 }
