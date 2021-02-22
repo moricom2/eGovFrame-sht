@@ -3,7 +3,7 @@ node {
         parameters([
             string(defaultValue: 'https://api.sandbox.x8i5.p1.openshiftapps.com:6443', description: 'OpenShift API Server URL을 입력해 주세요.', name: 'PARAM_OCP_APISERVER', trim: true),
             string(defaultValue: 'moricom', description: 'OpenShift 계정 ID를 입력해 주세요.', name: 'PARAM_OCP_USERNAME', trim: true),
-            password(defaultValue: '', description: 'OpenShift 계정 비밀번호를 입력해 주세요.', name: 'PARAM_OCP_PASSWORD'),
+            password(description: 'OpenShift 계정 비밀번호를 입력해 주세요.', name: 'PARAM_OCP_PASSWORD'),
             string(defaultValue: 'moricom-stage', description: '대상 Project ID를 입력해 주세요.', name: 'PARAM_OCP_PROJECT', trim: true),
             string(defaultValue: 'eap73-openjdk11-basic-s2i', description: '템플릿 명을 입력해 주세요.', name: 'PARAM_OCP_TEMPLATE_NAME', trim: true),
             string(defaultValue: 'sht', description: 'The name for the application', name: 'APPLICATION_NAME', trim: true),
