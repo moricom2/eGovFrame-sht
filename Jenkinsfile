@@ -5,7 +5,7 @@ node {
             string(defaultValue: 'moricom', description: 'OpenShift 계정 ID를 입력해 주세요.', name: 'PARAM_OCP_USERNAME', trim: true),
             password(description: 'OpenShift 계정 비밀번호를 입력해 주세요.', name: 'PARAM_OCP_PASSWORD'),
             string(defaultValue: 'moricom-stage', description: '대상 Project ID를 입력해 주세요.', name: 'PARAM_OCP_PROJECT', trim: true),
-            string(defaultValue: 'eap73-openjdk11-basic-s2i', description: '템플릿 명을 입력해 주세요.', name: 'PARAM_OCP_TEMPLATE_NAME', trim: true),
+            string(defaultValue: '-f https://raw.githubusercontent.com/moricom2/eGovFrame-sht/main/eap73-openjdk11-basic-s2i.yaml', description: '템플릿 정보를 입력해 주세요.', name: 'PARAM_OCP_TEMPLATE_INFO', trim: true),
             string(defaultValue: 'sht', description: 'The name for the application', name: 'APPLICATION_NAME', trim: true),
             string(defaultValue: 'https://github.com/moricom2/eGovFrame-sht.git', description: 'Git source URI for application', name: 'SOURCE_REPOSITORY_URL', trim: true),
             string(defaultValue: '', description: 'Git branch/tag reference', name: 'SOURCE_REPOSITORY_REF', trim: true),
@@ -21,7 +21,7 @@ node {
 			sh "oc project ${PARAM_OCP_PROJECT}"
         }
         stage('oc create'){
-            sh "oc process ${PARAM_OCP_TEMPLATE_NAME} -l app=${APPLICATION_NAME},application=${APPLICATION_NAME} APPLICATION_NAME=${APPLICATION_NAME} SOURCE_REPOSITORY_URL=${SOURCE_REPOSITORY_URL} SOURCE_REPOSITORY_REF=${SOURCE_REPOSITORY_REF} CONTEXT_DIR=${CONTEXT_DIR} -o yaml | oc create -f -"                
+            sh "oc process ${PARAM_OCP_TEMPLATE_INFO} -l app=${APPLICATION_NAME},application=${APPLICATION_NAME} APPLICATION_NAME=${APPLICATION_NAME} SOURCE_REPOSITORY_URL=${SOURCE_REPOSITORY_URL} SOURCE_REPOSITORY_REF=${SOURCE_REPOSITORY_REF} CONTEXT_DIR=${CONTEXT_DIR} -o yaml | oc create -f -"                
         }
         stage('oc logs bc (s2i-build)'){
             sh "oc logs -f bc/${APPLICATION_NAME}-build-artifacts"
