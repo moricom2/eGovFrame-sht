@@ -4,7 +4,7 @@ node {
             string(defaultValue: 'https://api.sandbox.x8i5.p1.openshiftapps.com:6443', description: 'OpenShift API Server URL을 입력해 주세요.', name: 'PARAM_OCP_APISERVER', trim: true),
             string(defaultValue: 'moricom', description: 'OpenShift 계정 ID를 입력해 주세요.', name: 'PARAM_OCP_USERNAME', trim: true),
             password(description: 'OpenShift 계정 비밀번호를 입력해 주세요.', name: 'PARAM_OCP_PASSWORD'),
-            string(defaultValue: 'moricom-stage', description: '대상 Project ID를 입력해 주세요.', name: 'PARAM_OCP_PROJECT', trim: true)
+            string(defaultValue: 'moricom-stage', description: '대상 Project ID를 입력해 주세요.', name: 'PARAM_OCP_PROJECT', trim: true),
             string(defaultValue: 'sht', description: 'The name for the application', name: 'APPLICATION_NAME', trim: true),
             string(defaultValue: 'https://github.com/moricom2/eGovFrame-sht.git', description: 'Git source URI for application', name: 'SOURCE_REPOSITORY_URL', trim: true),
             string(defaultValue: '', description: 'Git branch/tag reference', name: 'SOURCE_REPOSITORY_REF', trim: true),
